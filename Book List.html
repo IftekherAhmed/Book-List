@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="icon" href="close.png" type="image/gif" sizes="16x16">
+    <title>Book List</title>
+    <style>	
+        .table .books {
+            background: aliceblue;
+        }
+        
+        .table .advanced {
+            background: white;
+        }
+        
+        .table .total {
+            background: antiquewhite;
+        }
+        
+        .table .due {
+            background: lightgrey;
+        }
+        
+        .table .commission {
+            background: cadetblue;
+            color: #fff !important;
+        }
+        
+        .table .w-commission {
+            background: turquoise;
+        }
+        
+        .table .action {
+            text-align: center;
+        }
+        
+        .table .action img {
+            width: 20px;
+        }
+    </style>
+</head>
+
+<body>
+	<!-- Print -->
+	<div class="text-end">
+		<a href="#" class="btn btn-sm bg-white text-dark border border-secondary m-3" id="print_btn">
+			<img src="print.png" width="20">
+			Print
+		</a>
+	</div>
+	<!-- /Print -->
+	
+    <!-- Calculator -->
+    <div class="container-fluid overflow-hidden" id="print_con">
+        <div class="row g-5 py-2 px-3">
+            <!-- Left Side -->
+            <div class="col-md-6">
+                <!-- Important Books -->
+                <div class="card">
+                    <div class="card-header">Important</div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped" border="1" style="border-collapse: collapse;">
+                            <tr>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Author</th>
+                                <th>Publisher</th>
+                                <th>Possible Price</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <input type="hidden" name="i_cost[]" value="250">
+                                <td>01</td>
+                                <td>Scientific Quran</td>
+                                <td></td>
+                                <td></td>
+                                <td>250/=</td>
+                                <td class="action">
+                                    <a href="#" class="removeRow">
+                                        <img src="close.png" alt="...">
+                                    </a>
+                                </td>
+                            </tr>
+							
+                            <tr class="calculation">
+                                <td colspan="3"></td>
+                                <td colspan="3"><b>Calculation:</b></td>
+                            </tr>
+                            <tr class="total">
+                                <td colspan="3"></td>
+                                <td colspan="2">Total</td>
+                                <td id="i_cost_total"></td>
+                            </tr>
+                            <tr class="commission">
+                                <td colspan="3"></td>
+                                <td colspan="2">20% commission</td>
+                                <td id="i_cost_commission"></td>
+                            </tr>
+                            <tr class="w-commission">
+                                <td colspan="3"></td>
+                                <td colspan="2">With 20% commission</td>
+                                <td id="i_cost_w_commission"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- /Important Books -->
+            </div>
+            <!-- /Left Side -->
+			<br>
+            <!-- Right Side -->
+            <div class="col-md-6">
+                <div class="row g-4">
+                    <!-- Less Important Books -->
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">Less Important</div>
+                            <div class="card-body">
+                                <table class="table table-bordered table-striped" border="1" style="border-collapse: collapse;">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Name</th>
+                                        <th>Author</th>
+                                        <th>Publisher</th>
+                                        <th>Possible Price</th>
+                                        <th>Action</th>
+                                    </tr>
+									
+									<tr>
+										<input type="hidden" name="li_cost[]" value="306">
+										<td>01</td>
+										<td>দি আর্ট অব ওয়ার</td>
+										<td> সান জু ,  আ ম ম ফজলুর রাশিদ (অনুবাদক)</td>
+										<td></td>
+										<td>306/=</td>
+										<td class="action">
+											<a href="#" class="removeRow">
+												<img src="close.png" alt="...">
+											</a>
+										</td>
+									</tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Less Important Books -->
+					<br>
+                    <!-- Total Calculation -->
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">Total</div>
+                            <div class="card-body">
+                                <table class="table table-bordered table-striped" border="1" style="border-collapse: collapse;">
+                                    <tr class="books">
+                                        <td>Total Books</td>
+                                        <td></td>
+                                        <td id="total_books"></td>
+                                    </tr>
+                                    <tr class="total">
+                                        <td>Total Cost</td>
+                                        <td></td>
+                                        <td id="t_cost"></td>
+                                    </tr>
+                                    <tr class="advanced">
+                                        <td>Advanced</td>
+                                        <td></td>
+                                        <td><input type="text" id="advanced_cost" class="form-control" placeholder="0" value="0"></td>
+                                    </tr>
+                                    <tr class="due">
+                                        <td>Due Cost</td>
+                                        <td></td>
+                                        <td id="d_cost"></td>
+                                    </tr>
+                                    <tr class="commission">
+                                        <td>Total Commission (Including Advanced)</td>
+                                        <td></td>
+                                        <td id="f_percent"></td>
+                                    </tr>
+                                    <tr class="w-commission">
+                                        <td>With 20% commission (Excluding Advanced)</td>
+                                        <td></td>
+                                        <td id="tc_wc"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Total Calculation -->
+
+                    <!-- Logo -->
+                    <div class="col-md-12">
+                        <div class="text-end">
+                            <img src="logo.png" class="" width="300" alt="...">
+                        </div>
+                    </div>
+                    <!-- /Logo -->
+                </div>
+            </div>
+            <!-- /Right Side -->
+        </div>
+    </div>
+    <!-- /Calculator -->
+
+    <script src="jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+			//Print
+			function printData() {
+			   var divToPrint=document.getElementById("print_con");
+			   newWin= window.open("");
+			   newWin.document.write(divToPrint.outerHTML);
+			   newWin.print();
+			   newWin.close();
+			}
+
+			//Print Button
+			$("#print_btn").on('click',function(){
+				printData();
+			})
+			
+			//Calculation
+            function calculation() {
+                // Important Book List
+                // Important Books cost's array variable
+                var i_cost = $("input[name='i_cost[]']").map(function() {
+                    return $(this).val();
+                }).get();
+
+                // Important Books total cost variable
+                var i_total = 0;
+                for (var i = 0; i < i_cost.length; i++) {
+                    i_total += i_cost[i] << 0;
+                    $("#i_cost_total").html(i_total + "/=");
+                }
+
+                // Important Books Percentage variable
+                var i_percent = (i_total / 100) * 20;
+                // console.log(i_percent);
+                $("#i_cost_commission").html(i_percent.toFixed(2) + "/=");
+
+
+                // Important Books total cost with commission variable
+                var i_cost_w_commission = i_total - i_percent;
+                // console.log(i_percent);
+                $("#i_cost_w_commission").html(i_cost_w_commission.toFixed(2) + "/=");
+
+
+
+                // =====================
+                // =====================
+
+
+                // Less Important Book List
+                // Less Important Books cost's array variable
+                var l_cost = $("input[name='li_cost[]']").map(function() {
+                    return $(this).val();
+                }).get();
+
+
+                // Less Important Books total cost variable
+                var li_total = 0;
+                for (var li = 0; li < l_cost.length; li++) {
+                    li_total += l_cost[li] << 0;
+                    $("#li_cost_total").html(li_total + "/=");
+                }
+
+
+                // Less Important Books Percentage variable
+                var li_percent = (li_total / 100) * 20;
+                $("#li_cost_commission").html(li_percent.toFixed(2) + "/=");
+
+
+                // Less Important Books total cost with commission variable
+                var li_cost_w_commission = li_total - li_percent;
+                $("#li_cost_w_commission").html(li_cost_w_commission.toFixed(2) + "/=");
+
+
+
+                // =====================
+                // =====================
+
+
+
+                // Total Voucher
+                var i_len = i_cost.length;
+                var li_len = l_cost.length;
+
+                // Total Books
+                var total_books = i_len + li_len;
+                $("#total_books").html(total_books);
+
+                // Total Cost 
+                var t_cost = i_total + li_total;
+                $("#t_cost").html(t_cost + "/=");
+
+
+                // Due Cost 
+                var d_cost = i_total + li_total;
+                $("#advanced_cost").keyup(function() {
+                    //Total cost without advanced
+                    var tc_w_adv = d_cost - $(this).val();
+                    // Due Cost 
+                    $("#d_cost").html(tc_w_adv + "/=");
+                }).keyup();
+
+                // Total Percent 
+                var f_percent = (t_cost / 100) * 20;
+                $("#f_percent").html(f_percent.toFixed(2) + "/=");
+
+                // Total without commission
+                var tc_wc = t_cost - f_percent;
+
+
+                // Total cost without Advanced and Commission
+                $("#advanced_cost").keyup(function() {
+                    //Total cost without advanced
+                    var tc_wa = tc_wc - $(this).val();
+                    // Total without Advanced
+                    $("#tc_wc").html(tc_wa.toFixed(2) + "/=");
+                }).keyup();
+
+
+            }
+            calculation();
+
+            // Delete table row
+            $(".removeRow").click(function() {
+                var select_parent = $(this).parent().parent();
+                var select_child = select_parent.children('input').val();
+                var remeove_row = select_parent.remove();
+                var minus_cost = select_child;
+                calculation();
+            });
+
+        });
+    </script>
+</body>
+
+</html>
